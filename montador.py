@@ -6,7 +6,7 @@ op={
     'shr':'9', #dois regs
     'shl':'a', #dois regs
     'not':'b', #dois regs
-    'and':'c', #dois regs
+    'and':'c', #dois regs 
     'or':'d', #dois regs
     'xor':'e', #dois regs
     'cmp':'f', #dois regs
@@ -20,7 +20,7 @@ op={
 }
 regs = {'r0':'00','r1':'01','r2':'10','r3':'11'} #registradores
 jcaez = {'c': 8, 'a': 4, 'e': 2, 'z': 1} #jump condicional
-I_O = {'in': '0', 'out': '1', 'data':'0', 'addr':'1'}
+I_O = {'in': '0', 'out': '1', 'data':'0', 'addr':'1'} #Instrucoes de Input e Output
 
 def output_file(memory, path, lista_operacoes): #constroi o arquivo de saida
     f = open(path,'w')
