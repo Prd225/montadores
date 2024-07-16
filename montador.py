@@ -51,17 +51,14 @@ def arquivo_entrada(path): #cria a lista das linhas do programa com cada palavra
     return linhas
 
 def verifica_base(string): #Verifica em qual base está os endereços
-    if string[:2] == '0b':
-        number = int(string,2)
-    elif string[:2] == '0x':
-        number = int(string,16)
+    try:
+        numero = int(string, base = 0 )
+    except ValueError:
+        numero = int(string,10)
+    if(numero <= 15):
+        return '0' + hex(numero)[2:]
     else:
-        number = int(string)
-
-    if(number <= 15):
-        return ('0' + str(hex(number)[2:]))
-    else:
-        return (str(hex(number)[2:]))     
+        return hex(numero)[2:]
 
 def jump_condicional(string): #Constroí os valores do jump condicional
     valor = [jcaez[string[i]] for i in range(1, len(string))]
@@ -92,7 +89,6 @@ def traduzir(arquivo): #Cria o arquivo com os valores hexadecimais para cada lin
             print(f"\nErro na Leitura\t'{arquivo[i][0]}'\tlinha:{(i+1)}")
             break
     return lista_op
-
 #Parte Principal "Main"
 memory = ['00' for _ in range(256)]
 arquivo_input = sys.argv[1]

@@ -1,4 +1,4 @@
-data r0,0x30 
+data r0,0x30
 DATA r1, 06
 IN data, R0
 OUT addr, R1
@@ -16,7 +16,7 @@ Add r2,r0
 ld r0,r1
 st r3,r1
 
-clf     
+clf 
 
 cmp r1,r2
 
