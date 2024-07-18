@@ -1,0 +1,9 @@
+data r0, 0x02
+data r2, 0x01
+SWAP r0,r2
+HALT
+HALT
+HALT
+HALT
+HALT
+HALT

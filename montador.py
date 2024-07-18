@@ -27,6 +27,8 @@ def output_file(memory, path, lista_operacoes): #constroi o arquivo de saida
     f.write("v3.0 hex words addressed\n")
     a = 0
     while(a < len(lista_operacoes)):
+        if lista_operacoes[a] == "__END__":
+            lista_operacoes[a] = f"{a-1:02x}"
         f.write(f"{a:02x}: {lista_operacoes[a]}")
         f.write("\n")
         a += 1
@@ -65,6 +67,20 @@ def jump_condicional(string): #Constroí os valores do jump condicional
     valor = sum(valor)
     return str(hex(valor)[2:])
 
+#Funcao HALT - Recebe uma lista de operações para adicionar o bloco do pseudocodigo
+def halt(lista_operacoes):
+    lista_operacoes.append("40")
+    lista_operacoes.append("__END__")
+    
+
+#Funcao SWAP - Recebe a lista de operacoes e registradores para operacoes
+def swap(lista_operacoes, ra, rb):
+    rarb = tranforma_registradores(ra,rb)
+    rbra = tranforma_registradores(rb,ra)
+    lista_operacoes.append("e" + rarb)
+    lista_operacoes.append("e" + rbra)
+    lista_operacoes.append("e" + rarb)
+
 def traduzir(arquivo): #Cria o arquivo com os valores hexadecimais para cada linha
     lista_op = list()
     for i in range(len(arquivo)):
@@ -85,6 +101,10 @@ def traduzir(arquivo): #Cria o arquivo com os valores hexadecimais para cada lin
             lista_op.append(verifica_base(arquivo[i][1]))
         elif(arquivo[i][0] in I_O):
             lista_op.append('7' + tranforma_registradores((I_O[arquivo[i][0]] + I_O[arquivo[i][1]]),regs[arquivo[i][2]]))
+        elif(arquivo[i][0] == "swap"):
+            swap(lista_op, regs[arquivo[i][1]], regs[arquivo[i][2]])
+        elif(arquivo[i][0] == "halt"):
+            halt(lista_op)
         else:
             print(f"\nErro na Leitura\t'{arquivo[i][0]}'\tlinha:{(i+1)}")
             break
